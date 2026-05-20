@@ -5,31 +5,78 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#define DEFAULT_Y 6
+#define SCREEN_WIDTH 80
+#define SCREEN_HEIGH 22
+
+void init_choice();
+
 int main(int argc, char *argv[]){
 	initscr();
 	raw();
 	noecho();
 	curs_set(0);
 	int key;
-	mvaddstr(0, 0, "Initial statement");
+
+	int i;
+	for(i = 0; i < 80; i++){
+		mvaddch(0, i, ACS_HLINE);
+	}
+	mvaddstr(2, 33, "STATS CALC");
+	for(int i = 0; i < 80; i++){
+		mvaddch(5, i, ACS_HLINE);
+	}
+// 	mvaddstr(0, 0, "________________________________________________________________________________
+
+// 	█     ███        █        ███                ██        █        █                ██
+//        █            █        █    █        █                █           █    █    █             █
+//  	█	 █        █    █        █                █           █    █    █             █
+//        █		 █        █    █        █                    ██   █     █    ███         ██
+
+// ________________________________________________________________________________");
+	init_choice();
 	refresh();
-	while((key = getch()) != 'g'){
+	int selected;
+	while((key = getch()) != 'q'){
 		switch(key){
 			case '1':
-				mvaddstr(0, 0, "You pressed 1");
+				attron(A_BOLD);
+				mvaddstr(DEFAULT_Y + 2, 0, "Combinations and Permutations");
 				refresh();
-				return 1;
+				selected = 1;
+				//return 1;
 			case '2':
-				mvaddstr(0, 0, "You pressed 2");
+				attron(A_BOLD);
+				mvaddstr(DEFAULT_Y + 4, 0, "Distributions");
 				refresh();
-				return 2;
+				selected = 2;
+				//return 2;
+			
+			case '3':
+				attron(A_BOLD);
+				mvaddstr(DEFAULT_Y + 6, 0, "Matricies and Markov Chains");
+				refresh();
+				selected = 2;
+				//return 2;
+			case 'f':
+
 			default:
-				mvaddstr(0, 0, "Press another key");
+				mvaddstr(DEFAULT_Y + 8, 0, "Press another key");
 				refresh();
 				break;
 		}
+		//attroff(A_BOLD);
 		refresh();
 	}	
-	return 0; 
+	endwin();
+	return selected; 
 }
 
+void init_choice(){
+	attron(A_REVERSE);
+	mvaddstr(DEFAULT_Y, 0, "What would you like to do?(Press f to select)");
+	attroff(A_REVERSE);
+	mvaddstr(DEFAULT_Y + 2, 0, "Combinations and Permutations");
+	mvaddstr(DEFAULT_Y + 4, 0, "Distributions");
+	mvaddstr(DEFAULT_Y + 6, 0, "Matricies and Markov Chains");
+}
