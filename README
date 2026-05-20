@@ -1,0 +1,8 @@
+STAT CALCULATOR
+They make me take so much math in my undergraduate class I thought I might as well. program soome of it while I'm bored
+
+Current Ideas Moving Forwards:
+Create a storage option for individuals using to store values that they calculated and then allow them to input into the equations
+they're using. This likely means I'll be using a template class array for the stored values and will additionally need much more
+checks in place.
+
