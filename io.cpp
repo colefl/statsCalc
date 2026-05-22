@@ -26,6 +26,7 @@ void ms_init_choice(){
 	mvaddstr(DEFAULT_Y + 2, 0, "Combinations and Permutations");
 	mvaddstr(DEFAULT_Y + 4, 0, "Distributions");
 	mvaddstr(DEFAULT_Y + 6, 0, "Matricies and Markov Chains");
+    mvaddstr(DEFAULT_Y + 8, 0, "Back");
 }
 
 int ms_select_choice(){
@@ -40,7 +41,7 @@ int ms_select_choice(){
 				mvaddstr(DEFAULT_Y + 2, 0, "Combinations and Permutations");
 				refresh();
 				selected = 1;
-				move(DEFAULT_Y + 8,  0);
+				move(DEFAULT_Y + 10,  0);
 				clrtoeol();
 				break;
 				//return 1;
@@ -51,7 +52,7 @@ int ms_select_choice(){
 				mvaddstr(DEFAULT_Y + 4, 0, "Distributions");
 				refresh();
 				selected = 2;
-				move(DEFAULT_Y + 8,  0);
+				move(DEFAULT_Y + 10,  0);
 				clrtoeol();
 				break;
 				//return 2;
@@ -63,16 +64,27 @@ int ms_select_choice(){
 				mvaddstr(DEFAULT_Y + 6, 0, "Matricies and Markov Chains");
 				refresh();
 				selected = 3;
-				move(DEFAULT_Y + 8,  0);
+				move(DEFAULT_Y + 10,  0);
 				clrtoeol();
 				break;
 				//return 2;
+
+			case '4':
+				attroff(A_STANDOUT);
+				ms_init_choice();
+				attron(A_STANDOUT);
+				mvaddstr(DEFAULT_Y + 8, 0, "Quit");
+				refresh();
+				selected = 4;
+				move(DEFAULT_Y + 10,  0);
+				clrtoeol();
+				break;
 
 			case 'f':
                 return selected;
 
 			default:
-				mvaddstr(DEFAULT_Y + 8, 0, "Press another key");
+				mvaddstr(DEFAULT_Y + 10, 0, "Press another key");
 				refresh();
 				break;
 		}
@@ -133,6 +145,9 @@ int pc_choice(){
 				break;
 
 			case 'f':
+                move(DEFAULT_Y, 0);
+                clrtobot();
+                attroff(A_STANDOUT);
                 return selected;
 
 			default:
@@ -141,7 +156,11 @@ int pc_choice(){
 				break;
 		}
 		//attroff(A_BOLD);
-		refresh();
+		//refresh();
+
     }
+    attroff(A_STANDOUT);
+    move(DEFAULT_Y, 0);
+    clrtobot();
     return selected;
 }

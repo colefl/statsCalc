@@ -6,19 +6,21 @@
 #include "io.cpp"
 
 int main(int argc, char *argv[]){
-// 	mvaddstr(0, 0, "________________________________________________________________________________
 
-// 	█     ███        █        ███                ██        █        █                ██
-//        █            █        █    █        █                █           █    █    █             █
-//  	█	 █        █    █        █                █           █    █    █             █
-//        █		 █        █    █        █                    ██   █     █    ███         ██
+	int ms_selection = 0;
 
-// ________________________________________________________________________________");
-	init_terminal();
-	int ms_selection = ms_select_choice();
-	if(ms_selection == 1){
-		pc_init();
-		pc_choice();
+	while(ms_selection != 4){
+		init_terminal();
+		ms_selection = ms_select_choice();
+		if(ms_selection == 1){
+			pc_init();
+			int pc_selection = pc_choice();
+			if(pc_selection == 3){
+                move(DEFAULT_Y, 0);
+                clrtoeol();
+				continue;
+			}
+		}
 	}
 	return ms_selection;
 }
