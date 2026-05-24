@@ -15,3 +15,5 @@ int ms_select_choice();
 //PERMUTATIONS AND COMBINATIONS
 void pc_init();
 int pc_choice();
+int perm_screen();
+float init_selection();

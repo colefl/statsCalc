@@ -19,6 +19,10 @@ int main(int argc, char *argv[]){
                 move(DEFAULT_Y, 0);
                 clrtoeol();
 				continue;
+			}else if (pc_selection == 1){
+				move(DEFAULT_Y, 0);
+				clrtoeol();
+				perm_screen();
 			}
 		}
 	}

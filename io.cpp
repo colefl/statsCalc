@@ -5,6 +5,7 @@ void init_terminal(){
 	raw();
 	noecho();
 	curs_set(0);
+    keypad(stdscr, TRUE);
 
 	int i;
 	for(i = 0; i < 80; i++){
@@ -163,4 +164,32 @@ int pc_choice(){
     move(DEFAULT_Y, 0);
     clrtobot();
     return selected;
+}
+
+int perm_screen(){
+    mvaddstr(DEFAULT_Y, 0, "Please input the values(select using arrow keys):");
+    mvaddstr(DEFAULT_Y + 2, 0, "P(___, ___)");
+    float value1;//, value2;
+    int key, selected;
+    refresh();
+    while((key = getch()) != 'q'){
+        switch(key){
+            case KEY_LEFT:
+            selected = 1;
+            attron(A_STANDOUT);
+            refresh();
+            value1 = init_selection();
+            move(DEFAULT_Y + 2, 3);
+            printw("%f.3", value1);
+            //mvaddstr(DEFAULT_Y + 2, 3, value1);
+        }
+        refresh();
+    }
+    return selected;
+}
+
+float init_selection(){
+    float returnVal;
+    while((returnVal = getch()) != 'q'){}
+    return returnVal;
 }
