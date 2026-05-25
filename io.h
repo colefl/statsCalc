@@ -1,6 +1,8 @@
 #include <iostream>
 #include <cstdlib>
 #include <ncurses.h>
+//#include <strings.h>
+#include <string>
 #include <cstdlib>
 
 #define DEFAULT_Y 6

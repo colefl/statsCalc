@@ -169,7 +169,7 @@ int pc_choice(){
 int perm_screen(){
     mvaddstr(DEFAULT_Y, 0, "Please input the values(select using arrow keys):");
     mvaddstr(DEFAULT_Y + 2, 0, "P(___, ___)");
-    float value1;//, value2;
+    float value1, value2;
     int key, selected;
     refresh();
     while((key = getch()) != 'q'){
@@ -177,11 +177,26 @@ int perm_screen(){
             case KEY_LEFT:
             selected = 1;
             attron(A_STANDOUT);
+            mvaddstr(DEFAULT_Y + 2, 2, "___");
             refresh();
             value1 = init_selection();
-            move(DEFAULT_Y + 2, 3);
-            printw("%f.3", value1);
+            attroff(A_STANDOUT);
+            mvaddstr(DEFAULT_Y + 2, 2, "___");
+            move(DEFAULT_Y + 2, 2);
+            printw("%3.*f", value1);
+            break;
             //mvaddstr(DEFAULT_Y + 2, 3, value1);
+            
+            case KEY_RIGHT:
+            selected = 2;
+            attron(A_STANDOUT);
+            mvaddstr(DEFAULT_Y + 2, 7, "___");
+            refresh();
+            value2 = init_selection();
+            move(DEFAULT_Y + 2, 7);
+            attroff(A_STANDOUT);
+            printw("%3.*f", value2);
+            break;
         }
         refresh();
     }
@@ -189,7 +204,34 @@ int perm_screen(){
 }
 
 float init_selection(){
+    //char[100] placeholder;
+    char* returnValStr = new char [256];
     float returnVal;
-    while((returnVal = getch()) != 'q'){}
+    int key;
+    while((key = getch()) != 'q'){
+        //const char* str_msg = String("%f3", returnVal);
+        //std::cin >> returnValStr; //I don't think I understand how this works
+        switch(key){
+            case KEY_DL:
+                if(strlen(returnValStr) < 0){
+                    std::cout << "I make it to where the string doesn't" << std::endl;
+                    break;
+                } else {
+                    std::cout << "I make it to where the string has capacity" << std::endl;
+                    strncpy(returnValStr, returnValStr, sizeof (char) * (strlen(returnValStr) - 1)); //Deleting the last string
+                    break;
+                }
+            default:
+                std::cout << "I make it to default "  << returnValStr << " hello" << std::endl;
+                returnValStr += key;
+        }
+        //returnValStr += key;
+        returnVal = strtof(returnValStr, NULL);
+        std::cout << returnVal << std::endl;
+        //move(DEFAULT_Y + 2, 2);
+        //printw("%3.0f", returnVal);
+        refresh();
+        
+    }
     return returnVal;
 }
