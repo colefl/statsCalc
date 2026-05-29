@@ -1,4 +1,5 @@
 #include "io.h"
+#include "ComAndPerm.cpp"
 
 void init_terminal(){
     initscr();
@@ -170,8 +171,10 @@ int perm_screen(){
     mvaddstr(DEFAULT_Y, 0, "Please input the values(select using arrow keys):");
     mvaddstr(DEFAULT_Y + 2, 0, "input 1: ___");
 	mvaddstr(DEFAULT_Y + 4, 0, "input 2: ___");
-	mvaddstr(DEFAULT_Y + 6, 0, "Calculate:");
-    float value1, value2;
+	mvaddstr(DEFAULT_Y + 6, 0, "With Replacement? Yes No");
+	mvaddstr(DEFAULT_Y + 8, 0, "Calculate:");
+    int value1, value2;
+	bool w_replacement;
     int key, selected;
     refresh();
 	while((key = getch() != 'q')){
@@ -198,6 +201,10 @@ int perm_screen(){
 				refresh();
 			} else if(selected == 3){
 				attron(A_STANDOUT);
+				mvaddstr(DEFAULT_Y + 6, 0, "With Replacement?");
+				refresh();
+			} else if(selected == 4){
+				attron(A_STANDOUT);
 				mvaddstr(DEFAULT_Y + 6, 0, "Calculate");
 				refresh();
 			}
@@ -216,11 +223,40 @@ int perm_screen(){
 			attroff(A_STANDOUT);
 			printw("%f", value2);
 		} else if(selected == 3){
-			if(value1 == NULL || value2 == NULL){
-				mvaddstr(DEFAULT_Y + 8, 0, "Please input values for both numbers");
-			} else {
-				
+			//mvaddstr(DEFAULT_Y + 6, 18, "Yes");
+			int key2, selected2;
+			while((key2 = getch()) != 'f'){
+				switch(key2){
+					case KEY_LEFT:
+						selected2--;
+						break;
+					case KEY_RIGHT:
+						selected2++;
+						break;
+				}
+				if(selected2 <= 0){
+					selected2 = 1;
+					mvaddstr(DEFAULT_Y + 6, 18, "Yes");
+					attroff(A_STANDOUT);
+					mvaddstr(DEFAULT_Y + 6, 21, "No");
+					w_replacement = true;
+				}
+				if(selected2 > 1){
+					selected2 = 0;
+					mvaddstr(DEFAULT_Y + 6, 21, "No");
+					attroff(A_STANDOUT);
+					mvaddstr(DEFAULT_Y + 6, 18, "Yes");
+					w_replacement = false;
+				}
+
 			}
+			attroff(A_STANDOUT);
+		} else if(selected == 4){
+			// if(value1 == NULL || value2 == NULL){
+			// 	mvaddstr(DEFAULT_Y + 10, 0, "Please input values for both numbers");
+			// } else {
+			calcPermutations(value1, value2, w_replacement);
+			//}
 		}
 
 		refresh();
@@ -228,10 +264,10 @@ int perm_screen(){
     return selected;
 }
 
-float init_selection(){
+int init_selection(){
     //char[100] placeholder;
     //char* returnValStr = new char [256];
-    float returnVal;
+    int returnVal;
 	std::cin >> returnVal;
 	//std::cout << returnVal << std::endl;
     //int key;

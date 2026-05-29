@@ -18,4 +18,4 @@ int ms_select_choice();
 void pc_init();
 int pc_choice();
 int perm_screen();
-float init_selection();
+int init_selection();
